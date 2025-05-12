@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useStore from "../../utils/store";
 import audioController from "../../utils/AudioController";
 import scene from "../../webgl/Scene";
@@ -14,22 +14,25 @@ const Playlist = () => {
     setCurrentTrackIndex,
   } = useStore();
 
-  const audio = useRef(null);
-
-  useEffect(() => {
-    audio.current = audioController.audio;
-  }, []);
-
   const playTrack = (track, index) => {
-    if (!audio.current) return;
-    audioController.play(track.preview);
-    scene.cover.setCover(track.album.cover_small);
+    if (!track || !track.preview) return;
+
+    // Met à jour le store
     setCurrentTrack(track);
     setCurrentTrackIndex(index);
+
+    // Joue le son immédiatement
+    audioController.audio.src = track.preview;
+    audioController.audio.play();
+
+    // Affiche la cover dans la scène
+    scene.cover.setCover(track.album.cover_small);
   };
 
+  // Gère la lecture automatique à la fin de piste
   useEffect(() => {
-    if (!audio.current) return;
+    const el = audioController.audio;
+    if (!el) return;
 
     const handleEnded = () => {
       const nextIndex = currentTrackIndex + 1;
@@ -38,9 +41,9 @@ const Playlist = () => {
       }
     };
 
-    audio.current.addEventListener("ended", handleEnded);
+    el.addEventListener("ended", handleEnded);
     return () => {
-      audio.current.removeEventListener("ended", handleEnded);
+      el.removeEventListener("ended", handleEnded);
     };
   }, [currentTrackIndex, playlist]);
 
