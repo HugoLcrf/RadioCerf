@@ -1,0 +1,132 @@
+.toggleTracks {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  text-transform: uppercase;
+  color: var(--neon-color);
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  pointer-events: all;
+  z-index: 10;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--neon-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    text-shadow: 0 0 5px var(--neon-color), 0 0 10px var(--neon-color);
+    &:after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  width: 100%;
+  height: 90vh;
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: all 0.5s;
+
+  &_visible {
+    background-color: rgba(0, 0, 0, 0.85);
+    pointer-events: all;
+    opacity: 1;
+  }
+
+  .tracks {
+    width: 80%;
+    margin: auto;
+    margin-top: 12vh;
+    max-height: 55vh;
+    overflow-y: auto;
+    color: white;
+
+    .header {
+      display: flex;
+      color: var(--neon-color);
+      border-bottom: solid 1px var(--neon-color);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+
+      .order {
+        width: 10%;
+      }
+
+      .title {
+        width: 50%;
+      }
+
+      .duration {
+        width: 20%;
+      }
+    }
+  }
+}
+
+.searchRow {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.searchInput {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding-bottom: 8px;
+  color: var(--neon-color);
+  border-bottom: 2px solid var(--neon-color);
+  width: 250px;
+  font-size: 20px;
+  text-align: center;
+  caret-color: var(--neon-color);
+
+  &::placeholder {
+    color: rgba(0, 255, 255, 0.4);
+  }
+}
+
+.resetButton {
+  padding: 8px 14px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: transparent;
+  border: 2px solid var(--neon-color);
+  color: var(--neon-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: var(--neon-color);
+    color: black;
+    box-shadow: 0 0 10px var(--neon-color), 0 0 20px var(--neon-color);
+  }
+}
